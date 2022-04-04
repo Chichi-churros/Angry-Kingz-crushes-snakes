@@ -5,7 +5,8 @@ using UnityEngine;
 public class SlingshotBehavior : MonoBehaviour
 {
     // Bird prefab that will be spawned
-    public GameObject birdPrefab;
+    public GameObject player;
+    
 
     // Is there a Bird in the Trigger Area?
     bool occupied = false;
@@ -23,14 +24,19 @@ public class SlingshotBehavior : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!occupied)
+        if (occupied)
             spawnNext();
+    }
+
+    void placePlayer()
+    {
+
     }
 
     void spawnNext()
     {
         // Spawn a Bird at current position with default rotation
-        Instantiate(birdPrefab, transform.position, Quaternion.identity);
+        Instantiate(player, transform.position, Quaternion.identity);
         occupied = true;
     }
 

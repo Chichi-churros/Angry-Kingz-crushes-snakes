@@ -7,7 +7,7 @@ public class PAndR : MonoBehaviour
     Vector2 startPos;
 
     // The Force added upon releasepublic
-    float force = 800;
+    float force = 600;
 
     // Start is called before the first frame update
     void Start()
