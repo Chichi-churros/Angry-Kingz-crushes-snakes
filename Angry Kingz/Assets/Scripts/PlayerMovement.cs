@@ -16,9 +16,21 @@ public class PlayerMovement : MonoBehaviour {
     public Animator animator;
     public SpriteRenderer spriteRenderer;
 
+    // The Force added upon release
+    public float force = 600;
+    public GameObject slingshot;
+    public Vector2 startPos;
+
     private Vector3 velocity = Vector3.zero;
     private float horizontalMovement;
-    
+
+
+    private void Start()
+    {
+        startPos = slingshot.transform.position;
+    }
+
+
     // Update is called once per frame
     void Update(){
 
@@ -61,6 +73,30 @@ public class PlayerMovement : MonoBehaviour {
         } else if (_velocity < -0.1f) {
             spriteRenderer.flipX = true;
         }
+    }
+
+    private void OnMouseDrag()
+    {
+        Vector2 p = Camera.main.ScreenToWorldPoint(Input.mousePosition);    // convertit la position de la souris en world position
+
+        float radius = 1.8f;
+        Vector2 dir = p - startPos;
+
+        if (dir.sqrMagnitude > radius)
+            dir = dir.normalized * radius;
+
+        transform.position = startPos + dir;
+    }
+
+    private void OnMouseUp()
+    {
+        rb.constraints = RigidbodyConstraints2D.None;   // Free from constraints
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation; // set rotation constraints
+
+        rb.isKinematic = false;
+
+        Vector2 dir = startPos - (Vector2)transform.position;
+        rb.AddForce(dir * force);
     }
 
     private void OnDrawGizmos(){

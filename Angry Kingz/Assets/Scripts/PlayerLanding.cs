@@ -11,19 +11,36 @@ public class PlayerLanding : MonoBehaviour
     public int y = 10;
     public Vector2 landingPosition;
 
+    public bool slingshotEmpty;
+
     void Start()
     {
         landingPosition = slingshot.transform.position;
         rb = player.GetComponent<Rigidbody2D>();
+        slingshotEmpty = true;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") && slingshotEmpty)
         {
-            player.transform.position = landingPosition;
-            rb.constraints = RigidbodyConstraints2D.FreezePosition;
+            slingshotEmpty = false;
+            rb.isKinematic = true;  // mode : kinematic
+            player.transform.position = landingPosition;    // set position
+
+            rb.constraints = RigidbodyConstraints2D.FreezePosition;     // Freeze position
+            
+
+            //rb.isKinematic = false;
+
+            //player.transform.position = landingPosition;
+
         }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        slingshotEmpty = true;
     }
 
 }
