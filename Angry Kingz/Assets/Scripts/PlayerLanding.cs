@@ -13,6 +13,9 @@ public class PlayerLanding : MonoBehaviour
 
     public bool slingshotEmpty;
 
+    public Collider2D capsule;
+
+
     void Start()
     {
         landingPosition = slingshot.transform.position;
@@ -29,11 +32,6 @@ public class PlayerLanding : MonoBehaviour
             player.transform.position = landingPosition;    // set position
 
             rb.constraints = RigidbodyConstraints2D.FreezePosition;     // Freeze position
-            
-
-            //rb.isKinematic = false;
-
-            //player.transform.position = landingPosition;
 
         }
     }
@@ -41,6 +39,7 @@ public class PlayerLanding : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         slingshotEmpty = true;
+
     }
 
 }
