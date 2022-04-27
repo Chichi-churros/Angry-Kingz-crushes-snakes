@@ -6,8 +6,8 @@ public class PlayerMovement : MonoBehaviour {
     public float jumpForce;
 
     private bool isJumping;
-    public bool isGrounded;
-    public bool isLaunching;
+    private bool isGrounded;
+    private bool isLaunching;
 
     public Transform groundCheck;
     public float groundCheckRadius;
@@ -18,18 +18,16 @@ public class PlayerMovement : MonoBehaviour {
     public SpriteRenderer spriteRenderer;
 
     // Catapulte...
-    public float force = 600;
+    private float force = 500;
     public GameObject slingshot;
-    public Vector2 slingshotPos;
+    private Vector2 slingshotPos;
 
-    public Vector2 startPos;
     private Vector3 velocity = Vector3.zero;
     private float horizontalMovement;
 
     private void Start()
     {
         slingshotPos = slingshot.transform.position;
-        startPos = transform.position;
         isLaunching = false;
     }
 
@@ -119,13 +117,6 @@ public class PlayerMovement : MonoBehaviour {
         rb.AddForce(dir * force);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Death"))
-        {
-            transform.position = startPos;
-        }
-    }
 
     private void OnDrawGizmos(){
         Gizmos.color = Color.red;
